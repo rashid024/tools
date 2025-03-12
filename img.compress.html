@@ -3,9 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Compressor | Reduce Image Size Online</title>
-    <!-- Font Awesome for icons -->
+    <meta name="description" content="Free online image compressor tool. Reduce JPG, PNG, and WebP file sizes while maintaining quality. Mobile-friendly browser-based compression.">
+    <meta name="keywords" content="image compressor, reduce image size, optimize images, free image optimizer">
+    <meta name="author" content="Image Compressor Pro">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Online Image Compressor | Reduce File Size Instantly">
+    <meta property="og:description" content="Compress images for web and mobile with our free online tool. No registration required, browser-based processing.">
+    <meta property="og:type" content="website">
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <title>Image Compressor | Reduce Image Size Online</title>
     <style>
         :root {
             --primary: #2563eb;
@@ -13,9 +23,25 @@
             --background: #f8fafc;
         }
 
-        /* ... (keep previous styles intact) ... */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+        }
 
-        /* Updated Upload Section */
+        body {
+            background: var(--background);
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Upload Section */
         .upload-section {
             border: 2px dashed #cbd5e1;
             border-radius: 1rem;
@@ -24,61 +50,121 @@
             margin: 2rem 0;
             background: white;
             transition: all 0.3s ease;
-            cursor: pointer;
         }
 
-        /* New Compressor Symbol */
+        .upload-section:hover {
+            border-color: var(--primary);
+            background: #f8fafc;
+        }
+
         .compressor-symbol {
-            font-size: 3.5rem;
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
             color: var(--primary);
             margin-bottom: 1rem;
             transition: transform 0.3s ease;
         }
 
-        .upload-section:hover .compressor-symbol {
-            transform: scale(1.1);
-        }
-
-        /* Upload Button */
         .upload-button {
-            background: white;
-            color: var(--primary);
+            background: var(--primary);
+            color: white;
             padding: 1rem 2rem;
             border-radius: 0.5rem;
-            border: 2px solid var(--primary);
             display: inline-flex;
             align-items: center;
             gap: 0.75rem;
             transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
         }
 
         .upload-button:hover {
-            background: var(--primary);
-            color: white;
+            background: var(--secondary);
         }
 
-        .upload-button i {
-            font-size: 1.5rem;
+        /* Controls Section */
+        .controls {
+            background: white;
+            padding: clamp(1rem, 3vw, 2rem);
+            border-radius: 1rem;
+            margin: 2rem 0;
+        }
+
+        .size-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            margin: 1rem 0;
+        }
+
+        #preview {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: none;
+            margin-left: 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .upload-section {
+                padding: 1.5rem;
+            }
+            
+            .upload-button {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="upload-section">
-            <!-- New Compressor Symbol -->
             <div class="compressor-symbol">
-                <i class="fas fa-file-export"></i>
+                <i class="fas fa-compress-alt" aria-hidden="true"></i>
             </div>
-            
-            <div class="upload-button">
-                <i class="fas fa-cloud-upload-alt"></i>
+            <div class="upload-button" role="button" aria-label="Upload image">
+                <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
                 <span>Upload Image</span>
             </div>
             <input type="file" id="fileInput" accept="image/*" hidden>
-            <img id="preview" alt="Image preview">
+            <img id="preview" alt="Image preview" loading="lazy">
         </div>
 
-        <!-- Keep the rest of the controls section unchanged -->
         <div class="controls">
             <div class="size-buttons">
                 <button onclick="setCompression(30)">Small (30%)</button>
@@ -86,7 +172,7 @@
                 <button onclick="setCompression(75)">Large (75%)</button>
             </div>
 
-            <label>Compression Quality: <span id="qualityValue">80</span>%</label>
+            <label for="quality">Compression Quality: <span id="qualityValue">80</span>%</label>
             <input type="range" id="quality" min="1" max="100" value="80">
             <button onclick="compressImage()">
                 Compress Image
@@ -96,9 +182,79 @@
         </div>
     </div>
 
-    <!-- Keep the JavaScript section unchanged -->
     <script>
-        // ... (existing JavaScript remains the same) ...
+        // DOM Elements
+        const uploadButton = document.querySelector('.upload-button');
+        const fileInput = document.getElementById('fileInput');
+        const preview = document.getElementById('preview');
+        const quality = document.getElementById('quality');
+        const qualityValue = document.getElementById('qualityValue');
+        const spinner = document.getElementById('spinner');
+        const downloadLink = document.getElementById('downloadLink');
+
+        // Event Listeners
+        uploadButton.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', handleFileSelect);
+        
+        // File Handling
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                preview.src = event.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Compression Controls
+        function setCompression(level) {
+            quality.value = level;
+            qualityValue.textContent = level;
+        }
+
+        // Image Processing
+        async function compressImage() {
+            const file = fileInput.files[0];
+            if (!file) return alert('Please select an image first!');
+
+            const button = document.querySelector('button');
+            button.disabled = true;
+            spinner.style.display = 'inline-block';
+
+            try {
+                const img = await loadImage(preview.src);
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+
+                canvas.toBlob(blob => {
+                    const url = URL.createObjectURL(blob);
+                    downloadLink.href = url;
+                    downloadLink.download = `compressed_${file.name}`;
+                    downloadLink.style.display = 'block';
+                }, 'image/jpeg', quality.value / 100);
+            } catch (error) {
+                alert('Error compressing image: ' + error.message);
+            } finally {
+                button.disabled = false;
+                spinner.style.display = 'none';
+            }
+        }
+
+        function loadImage(src) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve(img);
+                img.onerror = reject;
+                img.src = src;
+            });
+        }
     </script>
 </body>
 </html>
