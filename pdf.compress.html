@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Compressor Pro - Reduce PDF File Size Online</title>
+    <meta name="description" content="Free online PDF compressor. Reduce PDF file size without quality loss. Optimize PDFs for web and email.">
+    <meta name="keywords" content="PDF compressor, reduce PDF size, PDF optimizer, compress PDF">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+    crossorigin="anonymous"></script>
+    
+    <!-- PDF-Lib for PDF processing -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #2980B9;
+            --secondary: #3498DB;
+            --background: #EBF5FB;
+            --text: #2C3E50;
+            --error: #e74c3c;
+            --success: #2ecc71;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .ad-container {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .header {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .pdf-symbol {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .upload-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .upload-button {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .upload-button:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .file-info {
+            margin-top: 1rem;
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+
+        .loading {
+            display: none;
+            margin-top: 1rem;
+            color: var(--primary);
+        }
+
+        .controls {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .quality-control {
+            margin-bottom: 2rem;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            margin-top: 0.5rem;
+            accent-color: var(--primary);
+        }
+
+        .compression-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .info-box {
+            background: var(--background);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .download-btn {
+            display: none;
+            background: var(--success);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: background 0.2s;
+        }
+
+        .download-btn:hover {
+            background: #27ae60;
+        }
+
+        .error-message {
+            color: var(--error);
+            margin-top: 1rem;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .compression-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Ad -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-app-pub-2974572463340085/1536179619"
+                data-ad-slot="XXXXXXXXXX"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
+        <div class="header">
+            <i class="fas fa-file-pdf pdf-symbol"></i>
+            <h1>PDF Compressor Pro</h1>
+            <p>Reduce PDF file size without quality loss</p>
+        </div>
+        
+        <!-- Upload Section -->
+        <div class="upload-section">
+            <div class="upload-button" onclick="document.getElementById('pdfInput').click()">
+                <i class="fas fa-cloud-upload-alt"></i>
+                Upload PDF
+            </div>
+            <input type="file" id="pdfInput" accept="application/pdf" hidden>
+            <div class="file-info" id="fileInfo"></div>
+            <div class="loading" id="loading">
+                <i class="fas fa-spinner fa-spin"></i> Compressing...
+            </div>
+            <div class="error-message" id="errorMessage"></div>
+        </div>
+
+        <!-- Middle Ad -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-format="autorelaxed"
+                data-ad-client="ca-app-pub-2974572463340085/5782841533"
+                data-ad-slot="XXXXXXXXXX"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
+        <!-- Compression Controls -->
+        <div class="controls">
+            <div class="quality-control">
+                <label>Compression Level: <span id="qualityValue">80</span>%</label>
+                <input type="range" id="quality" min="1" max="100" value="80">
+            </div>
+
+            <button onclick="compressPDF()" class="upload-button">
+                <i class="fas fa-compress-alt"></i>
+                Compress Now
+            </button>
+            
+            <div class="compression-info">
+                <div class="info-box">
+                    <h3>Original File</h3>
+                    <div id="originalSize"></div>
+                </div>
+                <div class="info-box">
+                    <h3>Compressed File</h3>
+                    <div id="compressedSize"></div>
+                    <a id="downloadLink" class="download-btn">Download</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Ad -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-app-pub-2974572463340085/6648905497"
+                data-ad-slot="XXXXXXXXXX"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+    </div>
+
+    <script>
+        // AdSense initialization
+        (adsbygoogle = window.adsbygoogle || []).push({});
+
+        let originalPDF = null;
+        const quality = document.getElementById('quality');
+        const qualityValue = document.getElementById('qualityValue');
+        const loading = document.getElementById('loading');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Event Listeners
+        document.getElementById('pdfInput').addEventListener('change', handlePDFSelect);
+        quality.addEventListener('input', () => qualityValue.textContent = quality.value);
+
+        async function handlePDFSelect(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            originalPDF = file;
+            
+            document.getElementById('fileInfo').innerHTML = `
+                Selected: ${file.name}<br>
+                Size: ${(file.size/1024).toFixed(1)}KB
+            `;
+
+            document.getElementById('originalSize').innerHTML = `
+                ${(file.size/1024).toFixed(1)}KB
+            `;
+        }
+
+        async function compressPDF() {
+            if (!originalPDF) {
+                showError('Please upload a PDF first!');
+                return;
+            }
+            
+            try {
+                loading.style.display = 'block';
+                errorMessage.style.display = 'none';
+                
+                const arrayBuffer = await originalPDF.arrayBuffer();
+                const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
+                
+                const pages = pdfDoc.getPages();
+                
+                for (const page of pages) {
+                    const resources = page.node.Resources();
+                    if (!resources) continue;
+
+                    // Fixed: Use direct string 'XObject' instead of PDFLib.Name.of
+                    const xObjects = resources.get('XObject');
+                    if (!xObjects) continue;
+
+                    for (const [name, ref] of xObjects.entries()) {
+                        const pdfObject = await pdfDoc.context.lookup(ref);
+                        
+                        if (pdfObject instanceof PDFLib.PDFImage) {
+                            // Fixed: Check filter name correctly
+                            const filter = pdfObject.getFilter();
+                            if (filter && filter.name === 'DCTDecode') {
+                                const jpegImage = await pdfDoc.embedJpg(await pdfObject.asBytes());
+                                page.node
+                                   .Resources()
+                                   .XObject()
+                                   .set(name, jpegImage.ref);
+                            }
+                        }
+                    }
+                }
+
+                // Save compressed PDF
+                const compressedBytes = await pdfDoc.save({
+                    useObjectStreams: true,
+                    compress: true,
+                    objectsPerTick: Infinity,
+                });
+
+                // Create download link
+                const blob = new Blob([compressedBytes], { type: 'application/pdf' });
+                const url = URL.createObjectURL(blob);
+                
+                document.getElementById('compressedSize').innerHTML = `
+                    ${(blob.size/1024).toFixed(1)}KB<br>
+                    ${((1 - blob.size/originalPDF.size)*100).toFixed(1)}% smaller
+                `;
+
+                const downloadLink = document.getElementById('downloadLink');
+                downloadLink.href = url;
+                downloadLink.download = `compressed_${originalPDF.name}`;
+                downloadLink.style.display = 'inline-block';
+                
+            } catch (error) {
+                showError('Error compressing PDF: ' + error.message);
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
