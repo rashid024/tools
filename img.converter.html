@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Converter Pro - JPG, PNG, WebP Converter</title>
+    <meta name="description" content="Free online image converter for JPG, PNG, and WebP formats. Convert images between different formats while maintaining quality.">
+    <meta name="keywords" content="image converter, JPG to PNG, PNG to WebP, photo converter, format converter">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+    crossorigin="anonymous"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #8E44AD;
+            --secondary: #9B59B6;
+            --background: #F5EEF8;
+            --text: #2C3E50;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .converter-symbol {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: inline-block;
+            transform: rotate(90deg);
+        }
+
+        /* Ad Containers */
+        .ad-container {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            border: 3px dashed #BDC3C7;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            margin: 2rem 0;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .upload-button {
+            background: var(--secondary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .file-info {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            word-break: break-word;
+            padding: 0.5rem;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        /* Conversion Controls */
+        .controls {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .format-controls {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .format-select {
+            padding: 0.8rem;
+            border: 2px solid #BDC3C7;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 1rem;
+            background: white;
+        }
+
+        .quality-control {
+            margin: 1.5rem 0;
+        }
+
+        /* Preview Section */
+        .preview-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .preview-box {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        #previewOriginal,
+        #previewConverted {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            display: none;
+            margin-top: 1rem;
+        }
+
+        .download-btn {
+            display: none;
+            background: var(--secondary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 1rem;
+            width: fit-content;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 1rem 0;
+            }
+
+            .converter-symbol {
+                font-size: 2rem;
+            }
+
+            .upload-section {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+
+            .upload-button {
+                width: 100%;
+                justify-content: center;
+                padding: 1rem;
+            }
+
+            .format-controls {
+                grid-template-columns: 1fr;
+            }
+
+            .preview-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .controls {
+                padding: 1.5rem;
+            }
+
+            .download-btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .preview-box {
+                padding: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Ad -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                data-ad-slot="XXXXXXXXXX"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
+        <div class="header">
+            <i class="fas fa-exchange-alt converter-symbol"></i>
+            <h1>Image Converter Pro</h1>
+            <p>Convert between JPG, PNG, and WebP formats</p>
+        </div>
+        
+        <!-- Upload Section -->
+        <div class="upload-section">
+            <div class="upload-button" onclick="document.getElementById('fileInput').click()">
+                <i class="fas fa-cloud-upload-alt"></i>
+                Upload Image
+            </div>
+            <input type="file" id="fileInput" accept="image/*" hidden>
+            <div class="file-info" id="fileInfo"></div>
+        </div>
+
+        <!-- Middle Ad -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-format="autorelaxed"
+                data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                data-ad-slot="XXXXXXXXXX"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
+        <!-- Conversion Controls -->
+        <div class="controls">
+            <div class="format-controls">
+                <div>
+                    <label>Output Format</label>
+                    <select id="format" class="format-select">
+                        <option value="jpg">JPG</option>
+                        <option value="png">PNG</option>
+                        <option value="webp">WebP</option>
+                    </select>
+                </div>
+                <div class="quality-control">
+                    <label>Quality: <span id="qualityValue">80</span>%</label>
+                    <input type="range" id="quality" min="1" max="100" value="80">
+                </div>
+            </div>
+
+            <button onclick="convertImage()" class="upload-button">
+                <i class="fas fa-sync-alt"></i>
+                Convert Now
+            </button>
+            
+            <div class="preview-container">
+                <div class="preview-box">
+                    <h3>Original Image</h3>
+                    <div id="originalFormat"></div>
+                    <img id="previewOriginal" alt="Original preview">
+                </div>
+                <div class="preview-box">
+                    <h3>Converted Image</h3>
+                    <div id="convertedFormat"></div>
+                    <img id="previewConverted" alt="Converted preview">
+                    <a id="downloadLink" class="download-btn">Download</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Ad -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                data-ad-slot="XXXXXXXXXX"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+    </div>
+
+    <script>
+        // AdSense initialization
+        (adsbygoogle = window.adsbygoogle || []).push({});
+
+        let originalImage = null;
+        const quality = document.getElementById('quality');
+        const qualityValue = document.getElementById('qualityValue');
+
+        // Event Listeners
+        document.getElementById('fileInput').addEventListener('change', handleFileSelect);
+        quality.addEventListener('input', () => qualityValue.textContent = quality.value);
+
+        async function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            try {
+                originalImage = await loadImage(URL.createObjectURL(file));
+                
+                document.getElementById('originalFormat').innerHTML = 
+                    `Format: ${file.type.replace('image/', '').toUpperCase()}`;
+                
+                document.getElementById('previewOriginal').src = originalImage.src;
+                document.getElementById('previewOriginal').style.display = 'block';
+                
+                document.getElementById('fileInfo').innerHTML = `
+                    Selected: ${file.name}<br>
+                    Size: ${(file.size/1024).toFixed(1)}KB
+                `;
+
+            } catch (error) {
+                alert('Error loading image: ' + error.message);
+            }
+        }
+
+        function loadImage(src) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve(img);
+                img.onerror = (e) => reject(new Error('Failed to load image'));
+                img.src = src;
+            });
+        }
+
+        function convertImage() {
+            if (!originalImage) return alert('Please upload an image first!');
+
+            const format = document.getElementById('format').value;
+            const quality = document.getElementById('quality').value / 100;
+
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = originalImage.width;
+            canvas.height = originalImage.height;
+            ctx.drawImage(originalImage, 0, 0);
+
+            let mimeType;
+            switch(format) {
+                case 'jpg': mimeType = 'image/jpeg'; break;
+                case 'png': mimeType = 'image/png'; break;
+                case 'webp': mimeType = 'image/webp'; break;
+            }
+
+            canvas.toBlob(blob => {
+                const convertedUrl = URL.createObjectURL(blob);
+                
+                document.getElementById('previewConverted').src = convertedUrl;
+                document.getElementById('previewConverted').style.display = 'block';
+                document.getElementById('convertedFormat').innerHTML = 
+                    `Format: ${format.toUpperCase()}<br>
+                     Size: ${(blob.size/1024).toFixed(1)}KB`;
+
+                const downloadLink = document.getElementById('downloadLink');
+                downloadLink.href = convertedUrl;
+                downloadLink.download = `converted.${format}`;
+                downloadLink.style.display = 'inline-block';
+            }, mimeType, quality);
+        }
+    </script>
+</body>
+</html>
