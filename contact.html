@@ -1,13 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Same meta tags as index.html -->
-    <!-- Same styles as index.html -->
-    <title>Contact Us - ToolHub</title>
-    <!-- Keep all SEO and social media meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact ToolHub - Get in touch for collaborations">
+    <meta name="author" content="Rashid Mallick">
+    <title>Contact - ToolHub</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Same CSS as Home Page -->
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --background: #f8fafc;
+            --text: #1e293b;
+            --light-text: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Paste ALL CSS from index.html here */
+        /* [Include full CSS from your index.html] */
+        /* ... Previous CSS styles ... */
+
+        /* Contact Specific Styles */
+        .contact-content {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .contact-section {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            background: var(--background);
+            border-radius: 0.75rem;
+        }
+
+        .contact-item i {
+            font-size: 2rem;
+            color: var(--primary);
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .contact-details h3 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-details a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .contact-details a:hover {
+            opacity: 0.8;
+        }
+
+        .closing-message {
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+    </style>
 </head>
 <body>
-    <!-- Same Header -->
+    <!-- Header Same as Home Page -->
     <header>
         <div class="logo">
             <div class="logo-icon">
@@ -23,37 +108,43 @@
     </header>
 
     <!-- Contact Content -->
-    <section class="content-section" style="max-width: 800px; margin: 4rem auto;">
-        <h2>Project & Development Inquiries</h2>
-        <div class="content-box">
-            <div class="contact-methods">
-                <div class="contact-item">
-                    <i class="fab fa-whatsapp"></i>
-                    <div>
-                        <h3>WhatsApp</h3>
-                        <a href="tel:+97471312749">+974 7131 2749</a><br>
-                        <a href="tel:+8801771570940">+880 1771 570 940</a>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <i class="fab fa-facebook"></i>
-                    <div>
-                        <h3>Facebook</h3>
-                        <a href="https://facebook.com/rashid.mallick" target="_blank">Rashid Mallick</a>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <i class="fab fa-github"></i>
-                    <div>
-                        <h3>GitHub</h3>
-                        <a href="https://github.com/rashidmallick" target="_blank">Explore My Tools</a>
-                    </div>
+    <main class="contact-content">
+        <div class="contact-section">
+            <h2>Project & Development Inquiries</h2>
+            
+            <div class="contact-item">
+                <i class="fab fa-whatsapp"></i>
+                <div class="contact-details">
+                    <h3>WhatsApp</h3>
+                    <a href="tel:+97471312749">+974 7131 2749</a><br>
+                    <a href="tel:+8801771570940">+880 1771 570 940</a>
                 </div>
             </div>
-            <p class="closing-text">Looking forward to connecting and collaborating!</p>
-        </div>
-    </section>
 
-    <!-- Same Footer as index.html -->
+            <div class="contact-item">
+                <i class="fab fa-facebook"></i>
+                <div class="contact-details">
+                    <h3>Facebook</h3>
+                    <a href="https://facebook.com/rashid.mallick" target="_blank">Rashid Mallick</a>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <i class="fab fa-github"></i>
+                <div class="contact-details">
+                    <h3>GitHub</h3>
+                    <a href="https://github.com/rashidmallick" target="_blank">Explore My Tools</a>
+                </div>
+            </div>
+
+            <p class="closing-message">Looking forward to connecting and collaborating!</p>
+        </div>
+    </main>
+
+    <!-- Footer Same as Home Page -->
+    <footer>
+        <p>&copy; 2025 ToolHub. All rights reserved.</p>
+        <p>Created by <a href="#">Rashid Mallick</a></p>
+    </footer>
 </body>
 </html>
