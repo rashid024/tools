@@ -2,9 +2,40 @@
 <html lang="en">
 <head>
     <!-- Same meta tags as index.html -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="About ToolHub - Free online tools for images and PDFs">
+    <meta name="keywords" content="about ToolHub, free tools developer, PDF tools creator">
+    <meta name="author" content="Rashid Mallick">
+    <title>About - ToolHub</title>
+    
     <!-- Same styles as index.html -->
-    <title>About Us - ToolHub</title>
-    <!-- Keep all SEO and social media meta tags -->
+    <style>
+        /* Paste all CSS from index.html here */
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --background: #f8fafc;
+            --text: #1e293b;
+            --light-text: #64748b;
+        }
+
+        * { 
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Paste ALL remaining CSS from index.html */
+        /* ... [Rest of your CSS] ... */
+    </style>
 </head>
 <body>
     <!-- Same Header -->
@@ -23,14 +54,23 @@
     </header>
 
     <!-- About Content -->
-    <section class="content-section" style="max-width: 800px; margin: 4rem auto;">
-        <h2>About Me</h2>
-        <div class="content-box">
-            <p>I have devoted my time and effort to developing these tools for the benefit of society, offering them free of charge to empower individuals and businesses. This work is a reflection of my passion for innovation and my commitment to making a meaningful impact.</p>
-            <p>I would like to dedicate these efforts to my beloved family—my daughters, Abiha Rashid Mallick and Ayesha Rashid Mallick, my loving wife Tisha, my mother, my late father, and my brothers and sisters, whose unwavering support has guided me through difficult times. Their encouragement and belief in me have been the driving force behind my journey.</p>
-        </div>
-    </section>
+    <main class="content-wrapper" style="max-width: 1200px; margin: 4rem auto; padding: 0 2rem;">
+        <section class="content-section">
+            <h2 style="font-size: 2rem; color: var(--primary); margin-bottom: 2rem;">About Me</h2>
+            <div class="content-box" style="background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <p style="line-height: 1.8; color: var(--light-text); margin-bottom: 1.5rem;">
+                    I have devoted my time and effort to developing these tools for the benefit of society, offering them free of charge to empower individuals and businesses. This work is a reflection of my passion for innovation and my commitment to making a meaningful impact.
+I would like to dedicate these efforts to my beloved family—my daughters, Abiha Rashid Mallick and Ayesha Rashid Mallick, my loving wife Tisha, my mother, my late father, and my brothers and sisters, whose unwavering support has guided me through difficult times. Their encouragement and belief in me have been the driving force behind my journey.
+                </p>
+                <!-- Rest of your about content -->
+            </div>
+        </section>
+    </main>
 
-    <!-- Same Footer as index.html -->
+    <!-- Same Footer -->
+    <footer>
+        <p>&copy; 2025 ToolHub. All rights reserved.</p>
+        <p>Created by <a href="#">Rashid Mallick</a></p>
+    </footer>
 </body>
 </html>
