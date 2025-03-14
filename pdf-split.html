@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Splitter Pro | Extract PDF Pages</title>
+    <meta name="description" content="Split PDF files into individual pages. Download selected pages as separate PDFs or zip archive.">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+    crossorigin="anonymous"></script>
+    
+    <!-- PDF-Lib and JSZip -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #2B579A;
+            --secondary: #4472C4;
+            --accent: #e74c3c;
+            --background: #F8FAFF;
+            --text: #2C3E50;
+            --success: #217346;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
+        .upload-section {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+            border: 2px dashed var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .upload-section.dragover {
+            border-color: var(--success);
+            background: #f8f9ff;
+        }
+
+        .upload-button-group {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1.2rem 2.5rem;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(43,87,154,0.2);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(43,87,154,0.3);
+        }
+
+        .file-info {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+
+        .page-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .page-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .page-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .page-card.selected {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0;
+            transition: width 0.4s ease;
+        }
+
+        .download-options {
+            display: none;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .ad-container {
+            margin: 3rem 0;
+            padding: 1.5rem;
+            background: #fff;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .upload-section {
+                padding: 1.8rem;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .page-selection {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Ad -->
+    <div class="ad-container">
+        <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+            data-ad-slot="1234567890"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-file-pdf logo-icon"></i>
+                <h1>PDF Splitter Pro</h1>
+            </div>
+            <p>Extract and download individual PDF pages</p>
+        </header>
+
+        <!-- Middle Ad -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                data-ad-slot="0987654321"
+                data-ad-format="rectangle"></ins>
+        </div>
+
+        <div class="upload-section" id="dropZone">
+            <div class="upload-button-group">
+                <button class="btn btn-primary" onclick="document.getElementById('pdfInput').click()">
+                    <i class="fas fa-file-upload"></i>
+                    Choose PDF File
+                </button>
+            </div>
+
+            <input type="file" id="pdfInput" accept="application/pdf" hidden>
+
+            <div class="file-info" id="fileInfo">
+                <div id="fileName"></div>
+                <div id="pageCount" class="page-count"></div>
+                <div class="page-selection" id="pageSelection"></div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div class="download-options" id="downloadOptions">
+                <button class="btn btn-primary" onclick="downloadAllPages()">
+                    <i class="fas fa-file-archive"></i>
+                    Download ZIP
+                </button>
+                <button class="btn btn-primary" onclick="downloadIndividualPages()">
+                    <i class="fas fa-file-pdf"></i>
+                    Download Selected
+                </button>
+            </div>
+
+            <div id="errorMessage" class="error-message"></div>
+        </div>
+
+        <!-- Bottom Ad -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                data-ad-slot="1122334455"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+        </div>
+    </div>
+
+    <script>
+        // Initialize AdSense
+        (adsbygoogle = window.adsbygoogle || []).push({});
+
+        let currentPDF = null;
+        let selectedPages = new Set();
+
+        // Drag and drop handlers
+        document.getElementById('dropZone').addEventListener('dragover', handleDragOver);
+        document.getElementById('dropZone').addEventListener('drop', handleDrop);
+        document.getElementById('pdfInput').addEventListener('change', handleFileSelect);
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'copy';
+            document.getElementById('dropZone').classList.add('dragover');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            document.getElementById('dropZone').classList.remove('dragover');
+            const files = Array.from(e.dataTransfer.files);
+            if(files.length > 0) processFile(files[0]);
+        }
+
+        async function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if(file) processFile(file);
+        }
+
+        function updateDownloadVisibility() {
+            const downloadOptions = document.getElementById('downloadOptions');
+            downloadOptions.style.display = selectedPages.size > 0 ? 'flex' : 'none';
+        }
+
+        async function processFile(file) {
+            try {
+                if(file.type !== 'application/pdf') {
+                    showError('Please upload a PDF file');
+                    return;
+                }
+
+                currentPDF = file;
+                selectedPages.clear();
+                updateDownloadVisibility();
+                
+                const pdfDoc = await PDFLib.PDFDocument.load(await file.arrayBuffer());
+                const pageCount = pdfDoc.getPageCount();
+                
+                document.getElementById('fileName').textContent = `File: ${file.name}`;
+                document.getElementById('pageCount').textContent = `Pages: ${pageCount}`;
+                
+                renderPageSelection(pageCount);
+
+            } catch(error) {
+                showError('Error loading PDF file');
+            }
+        }
+
+        function renderPageSelection(pageCount) {
+            const container = document.getElementById('pageSelection');
+            container.innerHTML = '';
+            
+            for(let i = 1; i <= pageCount; i++) {
+                const pageCard = document.createElement('div');
+                pageCard.className = 'page-card';
+                pageCard.textContent = `Page ${i}`;
+                pageCard.dataset.page = i;
+                
+                pageCard.addEventListener('click', () => {
+                    pageCard.classList.toggle('selected');
+                    const pageNumber = parseInt(pageCard.dataset.page);
+                    if(selectedPages.has(pageNumber)) {
+                        selectedPages.delete(pageNumber);
+                    } else {
+                        selectedPages.add(pageNumber);
+                    }
+                    updateDownloadVisibility();
+                });
+                
+                container.appendChild(pageCard);
+            }
+        }
+
+        async function downloadAllPages() {
+            await processAndDownload(true);
+        }
+
+        async function downloadIndividualPages() {
+            await processAndDownload(false);
+        }
+
+        async function processAndDownload(zipDownload) {
+            try {
+                if(!currentPDF || selectedPages.size === 0) {
+                    showError('Please select pages to download');
+                    return;
+                }
+
+                const progressFill = document.getElementById('progressFill');
+                const pages = Array.from(selectedPages).sort((a, b) => a - b);
+                const totalPages = pages.length;
+                let processed = 0;
+
+                progressFill.style.width = '0%';
+                document.querySelector('.progress-bar').style.display = 'block';
+                
+                const zip = new JSZip();
+                const pdfDoc = await PDFLib.PDFDocument.load(await currentPDF.arrayBuffer());
+
+                for(const pageNumber of pages) {
+                    const newPdf = await PDFLib.PDFDocument.create();
+                    const [page] = await newPdf.copyPages(pdfDoc, [pageNumber - 1]);
+                    newPdf.addPage(page);
+                    
+                    const pdfBytes = await newPdf.save();
+                    const fileName = `page-${pageNumber}.pdf`;
+                    
+                    if(zipDownload) {
+                        zip.file(fileName, pdfBytes);
+                    } else {
+                        const link = document.createElement('a');
+                        link.href = URL.createObjectURL(new Blob([pdfBytes], {type: 'application/pdf'}));
+                        link.download = fileName;
+                        link.click();
+                    }
+
+                    processed++;
+                    progressFill.style.width = `${(processed / totalPages) * 100}%`;
+                }
+
+                if(zipDownload) {
+                    const zipContent = await zip.generateAsync({type: "blob"});
+                    const url = URL.createObjectURL(zipContent);
+                    
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = `${currentPDF.name.replace('.pdf', '')}-pages.zip`;
+                    link.click();
+                }
+
+            } catch(error) {
+                showError('Error processing PDF file');
+            } finally {
+                document.querySelector('.progress-bar').style.display = 'none';
+            }
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => errorDiv.style.display = 'none', 5000);
+        }
+    </script>
+</body>
+</html>
