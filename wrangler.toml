@@ -1,9 +1,17 @@
-name = "rashid024.github.io/tools/"
+name = "toolhub-site"
 type = "static"
+
+[site]
+  bucket = "."  # Serve files from the root directory
 
 [build]
   command = "echo 'No build command needed'"  # No need for a build step
-  directory = "."  # If your static files are in the root
+  directory = "."  # Keep files in the root
 
 [deploy]
   branch = "main"  # Use your repository's main branch
+
+[[redirects]]
+  from = "/tools/*"
+  to = "/:splat"
+  status = 200
