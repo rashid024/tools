@@ -1,17 +1,9 @@
 name = "toolhub-site"
 type = "static"
 
-[site]
-  bucket = "."  # Serve files from the root directory
-
 [build]
   command = "echo 'No build command needed'"  # No need for a build step
-  directory = "."  # Keep files in the root
+  directory = "."  # Set the correct output directory
 
-[deploy]
-  branch = "main"  # Use your repository's main branch
-
-[[redirects]]
-  from = "/tools/*"
-  to = "/:splat"
-  status = 200
+[site]
+  bucket = "."  # The folder containing your site files
