@@ -276,9 +276,62 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* AdSense Styling */
+        .adsense-left, .adsense-right {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 160px; /* Adjust width as needed */
+            z-index: 1000;
+        }
+
+        .adsense-left {
+            left: 10px;
+        }
+
+        .adsense-right {
+            right: 10px;
+        }
+
+        @media (max-width: 1200px) {
+            .adsense-left, .adsense-right {
+                display: none; /* Hide ads on smaller screens */
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- AdSense Left -->
+    <div class="adsense-left">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2974572463340085"
+                crossorigin="anonymous"></script>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-2974572463340085"
+             data-ad-slot="4067225172"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <!-- AdSense Right -->
+    <div class="adsense-right">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2974572463340085"
+                crossorigin="anonymous"></script>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-2974572463340085"
+             data-ad-slot="4067225172"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
     <!-- Header -->
     <header>
         <div class="logo">
@@ -288,9 +341,9 @@
             <span class="logo-text">ToolHub</span>
         </div>
         <nav>
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
         </nav>
     </header>
 
@@ -299,66 +352,70 @@
         <h1>Free Online Tools for Images and PDFs</h1>
         <p>Optimize, convert, and edit your files with our powerful and easy-to-use tools. No downloads required!</p>
     </section>
-<section class="tools">
-    <h2>Featured Tools</h2>
-    <div class="tool-grid">
-        <!-- Image Tools -->
-        <div class="tool-card">
-            <a href="/tools/img.compress.html" class="tool-link">
-                <i class="fas fa-compress"></i>
-                <h3>Image Compressor</h3>
-                <p>Reduce image file size without losing quality. Supports JPG, PNG, and WebP.</p>
-            </a>
-        </div>
 
-        <div class="tool-card">
-            <a href="/tools/img.resize.html" class="tool-link">
-                <i class="fas fa-expand"></i>
-                <h3>Image Resizer</h3>
-                <p>Resize images to any dimension while maintaining aspect ratio.</p>
-            </a>
-        </div>
+    <!-- Tools Section -->
+    <section class="tools">
+        <h2>Featured Tools</h2>
+        <div class="tool-grid">
+            <!-- Image Tools -->
+            <div class="tool-card">
+                <a href="/tools/img.compress.html" class="tool-link">
+                    <i class="fas fa-compress"></i>
+                    <h3>Image Compressor</h3>
+                    <p>Reduce image file size without losing quality. Supports JPG, PNG, and WebP.</p>
+                </a>
+            </div>
 
-        <div class="tool-card">
-            <a href="/tools/img.convert.html" class="tool-link">
-                <i class="fas fa-exchange-alt"></i>
-                <h3>Image Converter</h3>
-                <p>Convert images between JPG, PNG, WebP, and more formats.</p>
-            </a>
-        </div>
+            <div class="tool-card">
+                <a href="/tools/img.resize.html" class="tool-link">
+                    <i class="fas fa-expand"></i>
+                    <h3>Image Resizer</h3>
+                    <p>Resize images to any dimension while maintaining aspect ratio.</p>
+                </a>
+            </div>
 
-        <!-- PDF Tools -->
-        <div class="tool-card">
-            <a href="/tools/pdf-compress.html" class="tool-link">
-                <i class="fas fa-file-pdf"></i>
-                <h3>PDF Compressor</h3>
-                <p>Reduce PDF file size without compromising quality.</p>
-            </a>
-        </div>
+            <div class="tool-card">
+                <a href="/tools/img.convert.html" class="tool-link">
+                    <i class="fas fa-exchange-alt"></i>
+                    <h3>Image Converter</h3>
+                    <p>Convert images between JPG, PNG, WebP, and more formats.</p>
+                </a>
+            </div>
 
-        <div class="tool-card">
-            <a href="/tools/pdf-to-word.html" class="tool-link">
-                <i class="fas fa-file-word"></i>
-                <h3>PDF to Word</h3>
-                <p>Convert PDF files to editable Word documents.</p>
-            </a>
-        </div>
+            <!-- PDF Tools -->
+            <div class="tool-card">
+                <a href="/tools/pdf-compress.html" class="tool-link">
+                    <i class="fas fa-file-pdf"></i>
+                    <h3>PDF Compressor</h3>
+                    <p>Reduce PDF file size without compromising quality.</p>
+                </a>
+            </div>
 
-        <div class="tool-card">
-            <a href="/tools/pdf-merger.html" class="tool-link">
-                <i class="fas fa-file-archive"></i>
-                <h3>PDF Merger</h3>
-                <p>Combine multiple PDF files into one document.</p>
-            </a>
+            <div class="tool-card">
+                <a href="/tools/pdf-to-word.html" class="tool-link">
+                    <i class="fas fa-file-word"></i>
+                    <h3>PDF to Word</h3>
+                    <p>Convert PDF files to editable Word documents.</p>
+                </a>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/pdf-merger.html" class="tool-link">
+                    <i class="fas fa-file-archive"></i>
+                    <h3>PDF Merger</h3>
+                    <p>Combine multiple PDF files into one document.</p>
+                </a>
+            </div>
+
+            <div class="tool-card">
+                <a href="/tools/pdf-split.html" class="tool-link">
+                    <i class="fas fa-file-archive"></i>
+                    <h3>PDF Splitter</h3>
+                    <p>Split PDF pages instantly online – fast, secure, and free tool!.</p>
+                </a>
+            </div>
         </div>
-        <div class="tool-card">
-            <a href="/tools/pdf-split.html" class="tool-link">
-                <i class="fas fa-file-archive"></i>
-                <h3>PDF Splitter</h3>
-                <p>Split PDF pages instantly online – fast, secure, and free tool!.</p>
-            </a>
-        </div>
-    </div>
+    </section>
 
     <!-- Footer -->
     <footer>
