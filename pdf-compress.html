@@ -8,7 +8,7 @@
     <meta name="keywords" content="PDF compressor, reduce PDF size, PDF optimizer, compress PDF">
     
     <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-app-pub-2974572463340085/1536179619"
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2974572463340085"
     crossorigin="anonymous"></script>
     
     <!-- PDF-Lib for PDF processing -->
@@ -44,6 +44,7 @@
             max-width: 800px;
             margin: 2rem auto;
             padding: 0 1rem;
+            position: relative;
         }
 
         .ad-container {
@@ -81,6 +82,8 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            border: none;
+            font-size: 1rem;
         }
 
         .upload-button:hover {
@@ -107,14 +110,25 @@
             box-shadow: 0 2px 15px rgba(0,0,0,0.1);
         }
 
-        .quality-control {
+        .compression-options {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
             margin-bottom: 2rem;
         }
 
-        input[type="range"] {
-            width: 100%;
-            margin-top: 0.5rem;
-            accent-color: var(--primary);
+        .compression-options button {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            transition: background 0.2s;
+        }
+
+        .compression-options button:hover {
+            background: var(--secondary);
         }
 
         .compression-info {
@@ -152,6 +166,29 @@
             display: none;
         }
 
+        /* AdSense Sidebar Styles */
+        .ad-left, .ad-right {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 160px; /* Adjust width as needed */
+            z-index: 1000;
+        }
+
+        .ad-left {
+            left: 10px;
+        }
+
+        .ad-right {
+            right: 10px;
+        }
+
+        @media (max-width: 1200px) {
+            .ad-left, .ad-right {
+                display: none; /* Hide side ads on smaller screens */
+            }
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 0 1rem;
@@ -160,17 +197,53 @@
             .compression-info {
                 grid-template-columns: 1fr;
             }
+
+            .upload-button {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .compression-options {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .compression-options button {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- ================== LEFT AD ================== -->
+    <div class="ad-left">
+        <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-2974572463340085"
+            data-ad-slot="9733317531"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <!-- ================== RIGHT AD ================== -->
+    <div class="ad-right">
+        <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-2974572463340085"
+            data-ad-slot="2426840448"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
     <div class="container">
-        <!-- Top Ad -->
+        <!-- ================== TOP AD ================== -->
         <div class="ad-container">
             <ins class="adsbygoogle"
                 style="display:block"
-                data-ad-client="ca-app-pub-2974572463340085/1536179619"
-                data-ad-slot="XXXXXXXXXX"
+                data-ad-client="ca-pub-2974572463340085"
+                data-ad-slot="4067225172"
                 data-ad-format="auto"
                 data-full-width-responsive="true"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
@@ -196,27 +269,24 @@
             <div class="error-message" id="errorMessage"></div>
         </div>
 
-        <!-- Middle Ad -->
+        <!-- ================== MIDDLE AD ================== -->
         <div class="ad-container">
             <ins class="adsbygoogle"
                 style="display:block"
-                data-ad-format="autorelaxed"
-                data-ad-client="ca-app-pub-2974572463340085/5782841533"
-                data-ad-slot="XXXXXXXXXX"></ins>
+                data-ad-client="ca-pub-2974572463340085"
+                data-ad-slot="7298725889"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
 
         <!-- Compression Controls -->
         <div class="controls">
-            <div class="quality-control">
-                <label>Compression Level: <span id="qualityValue">80</span>%</label>
-                <input type="range" id="quality" min="1" max="100" value="80">
+            <div class="compression-options">
+                <button onclick="compressPDF(0.3)">Compress to 30%</button>
+                <button onclick="compressPDF(0.5)">Compress to 50%</button>
+                <button onclick="compressPDF(0.7)">Compress to 70%</button>
             </div>
-
-            <button onclick="compressPDF()" class="upload-button">
-                <i class="fas fa-compress-alt"></i>
-                Compress Now
-            </button>
             
             <div class="compression-info">
                 <div class="info-box">
@@ -231,12 +301,12 @@
             </div>
         </div>
 
-        <!-- Bottom Ad -->
+        <!-- ================== BOTTOM AD ================== -->
         <div class="ad-container">
             <ins class="adsbygoogle"
                 style="display:block"
-                data-ad-client="ca-app-pub-2974572463340085/6648905497"
-                data-ad-slot="XXXXXXXXXX"
+                data-ad-client="ca-pub-2974572463340085"
+                data-ad-slot="8611807555"
                 data-ad-format="auto"
                 data-full-width-responsive="true"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
@@ -248,14 +318,11 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
 
         let originalPDF = null;
-        const quality = document.getElementById('quality');
-        const qualityValue = document.getElementById('qualityValue');
         const loading = document.getElementById('loading');
         const errorMessage = document.getElementById('errorMessage');
 
         // Event Listeners
         document.getElementById('pdfInput').addEventListener('change', handlePDFSelect);
-        quality.addEventListener('input', () => qualityValue.textContent = quality.value);
 
         async function handlePDFSelect(e) {
             const file = e.target.files[0];
@@ -273,7 +340,7 @@
             `;
         }
 
-        async function compressPDF() {
+        async function compressPDF(compressionLevel) {
             if (!originalPDF) {
                 showError('Please upload a PDF first!');
                 return;
@@ -286,13 +353,12 @@
                 const arrayBuffer = await originalPDF.arrayBuffer();
                 const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
                 
+                // Simulate compression by resizing images
                 const pages = pdfDoc.getPages();
-                
                 for (const page of pages) {
                     const resources = page.node.Resources();
                     if (!resources) continue;
 
-                    // Fixed: Use direct string 'XObject' instead of PDFLib.Name.of
                     const xObjects = resources.get('XObject');
                     if (!xObjects) continue;
 
@@ -300,10 +366,12 @@
                         const pdfObject = await pdfDoc.context.lookup(ref);
                         
                         if (pdfObject instanceof PDFLib.PDFImage) {
-                            // Fixed: Check filter name correctly
                             const filter = pdfObject.getFilter();
                             if (filter && filter.name === 'DCTDecode') {
-                                const jpegImage = await pdfDoc.embedJpg(await pdfObject.asBytes());
+                                const imageBytes = await pdfObject.asBytes();
+                                const imageBlob = new Blob([imageBytes], { type: 'image/jpeg' });
+                                const compressedImage = await compressImage(imageBlob, compressionLevel);
+                                const jpegImage = await pdfDoc.embedJpg(await compressedImage.arrayBuffer());
                                 page.node
                                    .Resources()
                                    .XObject()
@@ -339,6 +407,25 @@
             } finally {
                 loading.style.display = 'none';
             }
+        }
+
+        async function compressImage(imageBlob, compressionLevel) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+
+            return new Promise((resolve, reject) => {
+                img.onload = () => {
+                    canvas.width = img.width * compressionLevel;
+                    canvas.height = img.height * compressionLevel;
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    canvas.toBlob((blob) => {
+                        resolve(blob);
+                    }, 'image/jpeg', compressionLevel);
+                };
+                img.onerror = reject;
+                img.src = URL.createObjectURL(imageBlob);
+            });
         }
 
         function showError(message) {
