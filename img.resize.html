@@ -65,6 +65,29 @@
             text-align: center;
         }
 
+        /* Sidebar Ads */
+        .ad-left, .ad-right {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 160px; /* Adjust width as needed */
+            z-index: 1000;
+        }
+
+        .ad-left {
+            left: 10px;
+        }
+
+        .ad-right {
+            right: 10px;
+        }
+
+        @media (max-width: 1200px) {
+            .ad-left, .ad-right {
+                display: none; /* Hide side ads on smaller screens */
+            }
+        }
+
         /* Upload Section */
         .upload-section {
             border: 3px dashed #BDC3C7;
@@ -223,8 +246,30 @@
     </style>
 </head>
 <body>
+    <!-- ================== LEFT AD ================== -->
+    <div class="ad-left">
+        <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-app-pub-2974572463340085/9733317531"
+            data-ad-slot="XXXXXXXXXX"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <!-- ================== RIGHT AD ================== -->
+    <div class="ad-right">
+        <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-app-pub-2974572463340085/2426840448"
+            data-ad-slot="XXXXXXXXXX"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
     <div class="container">
-        <!-- Top Ad -->
+        <!-- ================== TOP AD ================== -->
         <div class="ad-container">
             <ins class="adsbygoogle"
                 style="display:block"
@@ -251,7 +296,7 @@
             <div class="file-info" id="fileInfo"></div>
         </div>
 
-        <!-- Middle Ad -->
+        <!-- ================== MIDDLE AD ================== -->
         <div class="ad-container">
             <ins class="adsbygoogle"
                 style="display:block"
@@ -299,7 +344,7 @@
             </div>
         </div>
 
-        <!-- Bottom Ad -->
+        <!-- ================== BOTTOM AD ================== -->
         <div class="ad-container">
             <ins class="adsbygoogle"
                 style="display:block"
